@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://127.0.0.1:4000/api/chat/";
+const API_URL = process.env.API_URL;
 
 // Define la estructura de un mensaje
 export interface Message {
@@ -10,7 +10,7 @@ export interface Message {
   createdAt?: string; 
 }
 
-// Función para obtener los mensajes
+
 export async function getMessages(): Promise<Message[] | undefined> {
   try {
     const response = await axios.get<Message[]>(API_URL + "messages/");
@@ -20,7 +20,6 @@ export async function getMessages(): Promise<Message[] | undefined> {
   }
 }
 
-// Función para crear un nuevo mensaje
 export async function createMessage(username: string, content: string): Promise<Message | undefined> {
   try {
     const message: Omit<Message, 'id' | 'createdAt'> = {
